@@ -17,7 +17,24 @@ const output = process.argv[2] ?? 'sample-export.zip'
 
 const seconds = (iso) => Math.floor(new Date(iso).getTime() / 1000)
 
-const entry = (username, iso) => ({
+/**
+ * Sent follow requests use a bare array of `label_values` entries, and leave
+ * `URL` blank for almost every record — confirmed against a real August 2026
+ * export, where 377 of 390 records had no URL.
+ */
+const pendingEntry = (username, iso, url = '') => ({
+  ...(iso === undefined ? {} : { timestamp: seconds(iso) }),
+  media: [],
+  label_values: [
+    { label: 'URL', value: url },
+    { label: 'Name', value: `Display ${username}` },
+    { label: 'Username', value: username },
+  ],
+  fbid: `fbid_${username}`,
+})
+
+/** Following/followers use the older `string_list_data` shape. */
+const followingEntry = (username, iso) => ({
   title: '',
   media_list_data: [],
   string_list_data: [
@@ -29,20 +46,21 @@ const entry = (username, iso) => ({
   ],
 })
 
-const pendingFollowRequests = {
-  relationships_follow_requests_sent: [
-    entry('ada_lovelace', '2019-03-14T10:00:00Z'),
-    entry('grace_hopper', '2021-11-02T18:30:00Z'),
-    entry('katherine_j', '2022-08-24T12:00:00Z'), // accepted since — also in following.json
-    entry('alan_turing', '2023-06-23T09:15:00Z'),
-    entry('margaret_h', '2026-07-20T08:00:00Z'), // recent
-    entry('no_date_account'), // export without a timestamp
-    entry('ADA_LOVELACE', '2019-03-14T10:00:00Z'), // duplicate in different casing
-  ],
-}
+const pendingFollowRequests = [
+  pendingEntry('ada_lovelace', '2019-03-14T10:00:00Z'),
+  pendingEntry('grace_hopper', '2021-11-02T18:30:00Z'),
+  pendingEntry('katherine_j', '2022-08-24T12:00:00Z'), // accepted since — also in following.json
+  pendingEntry('alan_turing', '2023-06-23T09:15:00Z', 'https://www.instagram.com/alan_turing'),
+  pendingEntry('margaret_h', '2026-07-20T08:00:00Z'), // recent
+  pendingEntry('no_date_account'), // export without a timestamp
+  pendingEntry('ADA_LOVELACE', '2019-03-14T10:00:00Z'), // duplicate in different casing
+]
 
 const following = {
-  relationships_following: [entry('katherine_j', '2022-09-01T12:00:00Z'), entry('barbara_l')],
+  relationships_following: [
+    followingEntry('katherine_j', '2022-09-01T12:00:00Z'),
+    followingEntry('barbara_l'),
+  ],
 }
 
 writeFileSync(
