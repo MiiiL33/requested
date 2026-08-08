@@ -13,9 +13,18 @@ coverage/
 *.zip
 instagram-*/
 
-# Working notes and agent/assistant context stay local. Only README.md is
-# committed; `pnpm check:docs` enforces that in CI, since ignoring a file does
-# not stop `git add -f`.
+# Documentation *about* the project — plans, roadmaps, decision logs, working
+# notes — stays local. Documentation *of* the product (README, CHANGELOGs,
+# changesets) is committed. `pnpm check:docs` enforces the split in CI, since
+# ignoring a file does not stop `git add -f`.
+docs/
+notes/
+TODO.md
+NOTES.md
+*.notes.md
+*.plan.md
+
+# Agent/assistant context
 CLAUDE.md
 AGENTS.md
 GEMINI.md
@@ -23,10 +32,3 @@ GEMINI.md
 .cursor/
 .windsurf/
 .aider*
-docs/
-notes/
-*.notes.md
-*.plan.md
-TODO.md
-NOTES.md
-CHANGELOG.md
