@@ -1,6 +1,6 @@
 import { buildProfileLinks, usernameFromProfileUrl } from '@requested/core'
 import type { AccountSnapshot, PendingRequest } from '@requested/core'
-import { collectStringListData, type StringListDatum } from './collect-entries.js'
+import { collectRelationships, type RawRelationship } from './collect-entries.js'
 import { MalformedExportError } from '../errors.js'
 
 /**
@@ -28,14 +28,15 @@ export function parsePendingRequests(
 ): PendingRequest[] {
   const requests: PendingRequest[] = []
 
-  for (const datum of collectStringListData(parseJson(json, file))) {
-    const username = resolveUsername(datum)
+  for (const relationship of collectRelationships(parseJson(json, file))) {
+    const username = resolveUsername(relationship)
     if (username === undefined) continue
 
-    const sentAt = resolveSentAt(datum.timestamp)
+    const sentAt = resolveSentAt(relationship.timestamp)
     requests.push({
       username,
-      profileUrl: datum.href ?? buildProfileLinks(username).web,
+      // Most real records carry no URL, so it is synthesised from the handle.
+      profileUrl: relationship.href ?? buildProfileLinks(username).web,
       ...(sentAt === undefined ? {} : { sentAt }),
     })
   }
@@ -46,8 +47,8 @@ export function parsePendingRequests(
 export function parseFollowing(json: string, file = 'following.json'): string[] {
   const usernames: string[] = []
 
-  for (const datum of collectStringListData(parseJson(json, file))) {
-    const username = resolveUsername(datum)
+  for (const relationship of collectRelationships(parseJson(json, file))) {
+    const username = resolveUsername(relationship)
     if (username !== undefined) usernames.push(username)
   }
 
@@ -62,11 +63,9 @@ function parseJson(raw: string, file: string): unknown {
   }
 }
 
-/** `value` holds the username; `href` is the fallback when it is missing or blank. */
-function resolveUsername(datum: StringListDatum): string | undefined {
-  const value = datum.value?.trim()
-  if (value !== undefined && value !== '') return value
-  return datum.href === undefined ? undefined : usernameFromProfileUrl(datum.href)
+function resolveUsername(relationship: RawRelationship): string | undefined {
+  if (relationship.username !== undefined) return relationship.username
+  return relationship.href === undefined ? undefined : usernameFromProfileUrl(relationship.href)
 }
 
 function resolveSentAt(timestamp: number | undefined): Date | undefined {

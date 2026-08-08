@@ -12,3 +12,23 @@ coverage/
 # Test fixtures are generated in-memory, so nothing here needs an exception.
 *.zip
 instagram-*/
+
+# Documentation *about* the project — plans, roadmaps, decision logs, working
+# notes — stays local. Documentation *of* the product (README, CHANGELOGs,
+# changesets) is committed. `pnpm check:docs` enforces the split in CI, since
+# ignoring a file does not stop `git add -f`.
+docs/
+notes/
+TODO.md
+NOTES.md
+*.notes.md
+*.plan.md
+
+# Agent/assistant context
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.claude/
+.cursor/
+.windsurf/
+.aider*
