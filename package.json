@@ -16,10 +16,11 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
     "sample:export": "node scripts/make-sample-export.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries",
+    "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:docs",
     "changeset": "changeset",
     "release": "pnpm build && changeset publish"
   },
