@@ -1,0 +1,6 @@
+packages:
+  - 'packages/*'
+  - 'apps/*'
+# esbuild ships a prebuilt native binary; tsup and vitest both need it.
+allowBuilds:
+  esbuild: true
