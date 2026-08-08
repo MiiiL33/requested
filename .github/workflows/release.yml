@@ -31,6 +31,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # Opens (or updates) a "Version Packages" PR; merging it publishes.
+      # Requires the repo setting "Allow GitHub Actions to create and approve
+      # pull requests", which is already enabled.
       - uses: changesets/action@v1
         with:
           publish: pnpm release

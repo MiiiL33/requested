@@ -2,8 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
+    branches: [main, dev]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -51,3 +52,8 @@ jobs:
       # automation adapter. See scripts/check-boundaries.mjs.
       - name: Check architecture boundaries
         run: pnpm check:boundaries
+
+      # This repo is public: only README.md may be committed. Keeps working
+      # notes, plans and agent instruction files out of it.
+      - name: Check tracked docs
+        run: pnpm check:docs
