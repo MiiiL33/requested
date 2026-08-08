@@ -1,0 +1,29 @@
+{
+  "name": "@requested/cli",
+  "version": "0.1.0",
+  "description": "Find and clear the Instagram follow requests you sent that were never answered. No login, no password.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "requested": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@requested/core": "workspace:*",
+    "@requested/export": "workspace:*",
+    "commander": "^12.1.0",
+    "picocolors": "^1.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

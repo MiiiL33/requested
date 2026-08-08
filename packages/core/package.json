@@ -1,0 +1,30 @@
+{
+  "name": "@requested/core",
+  "version": "0.1.0",
+  "description": "Pure domain logic for finding and clearing unanswered Instagram follow requests. Zero dependencies, zero I/O.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
