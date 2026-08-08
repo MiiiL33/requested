@@ -12,3 +12,21 @@ coverage/
 # Test fixtures are generated in-memory, so nothing here needs an exception.
 *.zip
 instagram-*/
+
+# Working notes and agent/assistant context stay local. Only README.md is
+# committed; `pnpm check:docs` enforces that in CI, since ignoring a file does
+# not stop `git add -f`.
+CLAUDE.md
+AGENTS.md
+GEMINI.md
+.claude/
+.cursor/
+.windsurf/
+.aider*
+docs/
+notes/
+*.notes.md
+*.plan.md
+TODO.md
+NOTES.md
+CHANGELOG.md

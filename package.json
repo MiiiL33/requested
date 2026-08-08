@@ -16,15 +16,14 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "check:boundaries": "node scripts/check-boundaries.mjs",
+    "check:docs": "node scripts/check-docs.mjs",
     "sample:export": "node scripts/make-sample-export.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries",
-    "changeset": "changeset",
-    "release": "pnpm build && changeset publish"
+    "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:docs",
+    "release": "pnpm build && pnpm publish -r --access public --no-git-checks"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.9",
     "@eslint/js": "^9.15.0",
     "@types/node": "^22.9.0",
     "@vitest/coverage-v8": "^2.1.5",
