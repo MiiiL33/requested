@@ -33,9 +33,31 @@ npm install -g @requested/cli
 
 ## Get your data
 
-Instagram → **Settings** → _Your activity_ → **Download your information** → Request download → format **JSON**, range **All time**.
+Instagram moved this into Meta's **Accounts Center**, so older guides pointing at "Your activity → Download your information" are out of date.
 
-It arrives by email, usually within a few hours.
+**In a browser** (fastest, and free of app-version differences):
+
+1. Go to **[accountscenter.instagram.com/info_and_permissions/dyi/](https://accountscenter.instagram.com/info_and_permissions/dyi/)**
+2. **Download or transfer information** → pick your Instagram account
+3. Choose **Some of your information** → tick **Followers and following**
+4. **Download to device**, date range **All time**, format **JSON**
+5. Submit, then wait for the email
+
+**In the mobile app:** ☰ menu → **Accounts Center** → **Your information and permissions** → **Download your information**.
+
+| English                          | Français                              |
+| -------------------------------- | ------------------------------------- |
+| Accounts Center                  | **Espace Comptes**                    |
+| Your information and permissions | **Vos informations et autorisations** |
+| Download your information        | **Télécharger vos informations**      |
+| Some of your information         | **Une partie de vos informations**    |
+| Followers and following          | **Abonnés et abonnements**            |
+| Download to device               | **Télécharger sur l'appareil**        |
+| Date range → All time            | **Période → Tout le temps**           |
+
+> Pick **JSON**, not HTML — HTML cannot be parsed reliably, and the CLI tells you so rather than guessing.
+>
+> Selecting only **Followers and following** keeps the export small, so it arrives much sooner than a full archive. Delivery is usually minutes to a few hours; Meta allows up to 48 hours for large requests.
 
 ## Use
 
