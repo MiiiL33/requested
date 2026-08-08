@@ -4,11 +4,7 @@
  * The planned web app imports this to parse a dropped ZIP entirely client-side,
  * which is what lets the product promise that your data never leaves the device.
  */
-export {
-  collectStringListData,
-  StringListDatumSchema,
-  type StringListDatum,
-} from './parse/collect-entries.js'
+export { collectRelationships, type RawRelationship } from './parse/collect-entries.js'
 
 export {
   buildSnapshot,
