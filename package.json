@@ -1,0 +1,40 @@
+{
+  "name": "requested",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Find and clear the Instagram follow requests you sent that were never answered.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "check:boundaries": "node scripts/check-boundaries.mjs",
+    "sample:export": "node scripts/make-sample-export.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries",
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.9",
+    "@eslint/js": "^9.15.0",
+    "@types/node": "^22.9.0",
+    "@vitest/coverage-v8": "^2.1.5",
+    "eslint": "^9.15.0",
+    "fflate": "^0.8.2",
+    "prettier": "^3.3.3",
+    "tsup": "^8.3.5",
+    "turbo": "^2.3.0",
+    "typescript": "^5.6.3",
+    "typescript-eslint": "^8.15.0",
+    "vitest": "^2.1.5"
+  }
+}

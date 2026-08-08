@@ -1,0 +1,39 @@
+{
+  "name": "@requested/export",
+  "version": "0.1.0",
+  "description": "Reads an Instagram data-export archive and produces an account snapshot. No login, no network.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./parse": {
+      "types": "./dist/parse.d.ts",
+      "import": "./dist/parse.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src"
+  },
+  "dependencies": {
+    "@requested/core": "workspace:*",
+    "fflate": "^0.8.2",
+    "zod": "^3.23.8"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
