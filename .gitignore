@@ -32,3 +32,7 @@ GEMINI.md
 .cursor/
 .windsurf/
 .aider*
+
+# Local release/deploy tooling. Describes how *we* ship, not how the product
+# works, so it follows the same rule as docs/ and stays off the public repo.
+deploy.sh
