@@ -6,6 +6,7 @@ import { loadRequests, type LoadOptions } from './load-requests.js'
 import { clearQueueState, loadQueueState, saveQueueState } from '../queue-store.js'
 import { openUrl } from '../open-url.js'
 import { formatAge } from '../duration.js'
+import { InteractiveTerminalRequiredError } from '../errors.js'
 
 export interface OpenOptions extends LoadOptions {
   readonly reset?: boolean
@@ -19,6 +20,10 @@ export interface OpenOptions extends LoadOptions {
  * few hundred requests can be cleared across several sittings.
  */
 export async function runOpen(options: OpenOptions): Promise<void> {
+  // Checked before any work: failing fast with an explanation beats loading an
+  // export and then hanging on a prompt nobody can answer.
+  if (process.stdin.isTTY !== true) throw new InteractiveTerminalRequiredError()
+
   const requests = await loadRequests(options)
 
   if (requests.length === 0) {
