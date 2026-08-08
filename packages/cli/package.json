@@ -1,6 +1,6 @@
 {
   "name": "@requested/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Find and clear the Instagram follow requests you sent that were never answered. No login, no password.",
   "license": "MIT",
   "type": "module",
