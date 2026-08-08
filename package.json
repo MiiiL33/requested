@@ -21,9 +21,11 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:docs",
-    "release": "pnpm build && pnpm publish -r --access public --no-git-checks"
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.9",
     "@eslint/js": "^9.15.0",
     "@types/node": "^22.9.0",
     "@vitest/coverage-v8": "^2.1.5",
