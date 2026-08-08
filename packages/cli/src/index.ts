@@ -4,6 +4,7 @@ import { ExportError } from '@requested/export'
 import { runList, type OutputFormat } from './commands/list.js'
 import { runOpen } from './commands/open.js'
 import { InvalidDurationError } from './duration.js'
+import { CliError } from './errors.js'
 
 const FORMATS: readonly string[] = ['table', 'json', 'csv']
 
@@ -54,15 +55,30 @@ program
     runOpen(options),
   )
 
-try {
-  await program.parseAsync(process.argv)
-} catch (error) {
-  // Expected, user-actionable failures print a message; everything else keeps
-  // its stack trace, because an unexpected crash is a bug we want reported.
-  if (error instanceof ExportError || error instanceof InvalidDurationError) {
-    process.stderr.write(`\n${pc.red('✗')} ${error.message}\n\n`)
-    process.exitCode = 1
-  } else {
+// Wrapped in a function rather than left as a top-level await: if a promise
+// here never settles, top-level await reports only "Detected unsettled
+// top-level await" and hides whatever actually went wrong.
+async function main(): Promise<void> {
+  try {
+    await program.parseAsync(process.argv)
+  } catch (error) {
+    // Expected, user-actionable failures print a message; everything else keeps
+    // its stack trace, because an unexpected crash is a bug we want reported.
+    if (
+      error instanceof ExportError ||
+      error instanceof InvalidDurationError ||
+      error instanceof CliError
+    ) {
+      process.stderr.write(`\n${pc.red('✗')} ${error.message}\n\n`)
+      process.exitCode = 1
+      return
+    }
     throw error
   }
 }
+
+main().catch((error: unknown) => {
+  process.stderr.write(`\n${pc.red('✗')} Unexpected error\n`)
+  console.error(error)
+  process.exitCode = 1
+})
