@@ -6,6 +6,9 @@ import { runOpen } from './commands/open.js'
 import { InvalidDurationError } from './duration.js'
 import { CliError } from './errors.js'
 
+/** Replaced at build time by tsup with the version from package.json. */
+declare const __CLI_VERSION__: string
+
 const FORMATS: readonly string[] = ['table', 'json', 'csv']
 
 function parseFormat(value: string): OutputFormat {
@@ -23,7 +26,7 @@ program
     'Find and clear the Instagram follow requests you sent that were never answered.\n' +
       'Reads your official Instagram data export locally. No login, no password, nothing uploaded.',
   )
-  .version('0.1.0')
+  .version(__CLI_VERSION__)
   .showHelpAfterError()
 
 const exportOption = [
