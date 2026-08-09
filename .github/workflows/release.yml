@@ -9,7 +9,9 @@ concurrency: release
 permissions:
   contents: write
   pull-requests: write
-  id-token: write # npm provenance
+  # Required for npm trusted publishing (OIDC). Without it, publishing fails
+  # with a misleading E404 rather than an auth error.
+  id-token: write
 
 jobs:
   release:
@@ -24,23 +26,38 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          # Trusted publishing needs Node >= 22.14.0 and npm >= 11.5.1.
+          node-version: 22.14.0
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
+      # Node 22 ships npm 10.x, which predates OIDC support.
+      - name: Upgrade npm for trusted publishing
+        run: npm install -g npm@latest
+
       - run: pnpm install --frozen-lockfile
 
-      # Opens (or updates) a "Version Packages" PR; merging it publishes.
-      # Requires the repo setting "Allow GitHub Actions to create and approve
-      # pull requests", which is already enabled.
-      - uses: changesets/action@v1
+      # Changesets handles versioning only. When changesets are pending it
+      # opens/updates the "version packages" PR; once that PR is merged there
+      # are none left, and the publish step below runs.
+      - id: changesets
+        uses: changesets/action@v1
         with:
-          publish: pnpm release
           version: pnpm changeset version
           commit: 'version packages'
           title: 'version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: 'true'
+
+      - name: Verify
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: pnpm verify
+
+      # Publishing is not delegated to changesets: `pnpm publish` cannot
+      # authenticate via OIDC on pnpm 11 (pnpm/pnpm#11513), and changesets/action
+      # E404s on scoped packages over OIDC (npm/cli#8976). The script packs with
+      # pnpm (to rewrite workspace:* deps) and uploads with npm (which supports
+      # OIDC). No NPM_TOKEN anywhere — auth is a short-lived OIDC token.
+      - name: Publish to npm
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: node scripts/publish-packages.mjs

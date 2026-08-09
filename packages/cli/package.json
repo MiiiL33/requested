@@ -3,6 +3,20 @@
   "version": "0.2.0",
   "description": "Find and clear the Instagram follow requests you sent that were never answered. No login, no password.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiiiL33/requested.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/MiiiL33/requested#readme",
+  "bugs": "https://github.com/MiiiL33/requested/issues",
+  "keywords": [
+    "instagram",
+    "follow-requests",
+    "unfollow",
+    "cli",
+    "privacy"
+  ],
   "type": "module",
   "bin": {
     "requested": "./dist/index.js"

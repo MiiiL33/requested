@@ -22,7 +22,8 @@
     "format:check": "prettier --check .",
     "verify": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build && pnpm check:boundaries && pnpm check:docs",
     "changeset": "changeset",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && node scripts/publish-packages.mjs",
+    "release:dry": "pnpm build && node scripts/publish-packages.mjs --dry-run"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.9",
