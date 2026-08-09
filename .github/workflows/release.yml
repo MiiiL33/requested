@@ -26,14 +26,21 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          # Trusted publishing needs Node >= 22.14.0 and npm >= 11.5.1.
-          node-version: 22.14.0
+          # Latest 22.x, which clears the >= 22.14.0 that trusted publishing
+          # needs. Pinning an exact patch only starves the job of security
+          # updates and pins it below what current npm requires.
+          node-version: 22
           cache: pnpm
           registry-url: https://registry.npmjs.org
 
-      # Node 22 ships npm 10.x, which predates OIDC support.
+      # Node 22 ships npm 10.x, which predates OIDC support (needs >= 11.5.1).
+      #
+      # The major is pinned rather than tracking `latest`: npm 12 requires
+      # Node ^22.22.2 || ^24.15.0, so `npm@latest` breaks the moment npm's
+      # engine floor moves past whatever Node this job runs. npm 11 accepts
+      # ^20.17.0 || >=22.9.0 and is comfortably past the OIDC floor.
       - name: Upgrade npm for trusted publishing
-        run: npm install -g npm@latest
+        run: npm install -g npm@11
 
       - run: pnpm install --frozen-lockfile
 
