@@ -1,8 +1,15 @@
 {
   "name": "@requested/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Pure domain logic for finding and clearing unanswered Instagram follow requests. Zero dependencies, zero I/O.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiiiL33/requested.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/MiiiL33/requested#readme",
+  "bugs": "https://github.com/MiiiL33/requested/issues",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",

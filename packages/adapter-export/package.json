@@ -1,8 +1,15 @@
 {
   "name": "@requested/export",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Reads an Instagram data-export archive and produces an account snapshot. No login, no network.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiiiL33/requested.git",
+    "directory": "packages/adapter-export"
+  },
+  "homepage": "https://github.com/MiiiL33/requested#readme",
+  "bugs": "https://github.com/MiiiL33/requested/issues",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
