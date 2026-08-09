@@ -1,5 +1,16 @@
 # @requested/export
 
+## 0.2.1
+
+### Patch Changes
+
+- 2fc256b: Add repository, homepage and bugs metadata.
+
+  These link the npm listings back to the source and are required for provenance attestation under npm trusted publishing.
+
+- Updated dependencies [2fc256b]
+  - @requested/core@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
