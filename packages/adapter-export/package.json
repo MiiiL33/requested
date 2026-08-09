@@ -1,6 +1,6 @@
 {
   "name": "@requested/export",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Reads an Instagram data-export archive and produces an account snapshot. No login, no network.",
   "license": "MIT",
   "repository": {
